@@ -57,7 +57,32 @@
          </font>
         </property>
         <property name="text">
-         <string>刷新</string>
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="rsapp.qrc">
+          <normaloff>:/RSApp/refresh.png</normaloff>:/RSApp/refresh.png</iconset>
+        </property>
+        <property name="checkable">
+         <bool>false</bool>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+        <property name="autoRepeat">
+         <bool>false</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>false</bool>
+        </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
+        <property name="default">
+         <bool>false</bool>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -73,8 +98,8 @@
          <font>
           <family>微软雅黑</family>
           <pointsize>20</pointsize>
-          <weight>50</weight>
-          <bold>false</bold>
+          <weight>75</weight>
+          <bold>true</bold>
          </font>
         </property>
         <property name="text">

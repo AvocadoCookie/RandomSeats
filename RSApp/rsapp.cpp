@@ -12,6 +12,8 @@ RSApp::RSApp(QWidget* parent): QMainWindow(parent) {
 }
 
 void RSApp::sitDown() {
+    setWindowState(Qt::WindowMaximized);
+
     QVector<QString> students = stu.getStudents();
     QGridLayout* body = ui.gridLayout;
     if(body->count() != 0) {

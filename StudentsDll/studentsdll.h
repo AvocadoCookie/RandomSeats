@@ -15,6 +15,7 @@ public:
 
 private:
     void arrange(QVector<Seat> &, QVector<QString> &, const int);
+    void similarity(const QVector<QString> &, QVector<QString> &);
     QVector<QString> students;
     QFile list;
 };
