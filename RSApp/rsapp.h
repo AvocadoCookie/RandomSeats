@@ -12,6 +12,7 @@ public:
     ~RSApp();
 
 private:
+    QVector<int> column;
     Students stu;
     Ui::RSAppClass ui;
     void sitDown();

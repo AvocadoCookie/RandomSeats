@@ -29,28 +29,28 @@ Students::~Students() {
 	list.close();
 }
 
-void Students::refresh() {
+void Students::refresh(const int column) {
 	const int size = students.size();
 	QVector<Seat> seats(size);
 	QVector<QString> newStudents(size);
 	for(int i = 0; i < size; i++) {
-		seats[i] = Seat(i / 8, i % 8);
+		seats[i] = Seat(i / column, i % column);
 	}
 	if(size % 2) {
-		arrange(seats, newStudents, size / 2);
+		arrange(seats, newStudents, size / 2, column);
 	}
 	for(int i = size / 2 - 1; i >= 0; i--) {
-		arrange(seats, newStudents, i);
-		arrange(seats, newStudents, size - i - 1);
+		arrange(seats, newStudents, i, column);
+		arrange(seats, newStudents, size - i - 1, column);
 	}
-	similarity(students, newStudents);
+	similarity(students, newStudents, column);
 	students = newStudents;
 }
 
 
-void Students::similarity(const QVector<QString> &s, QVector<QString> &_s) {
+void Students::similarity(const QVector<QString> &s, QVector<QString> &_s, const int column) {
 	int size = s.size();
-	if(size < 8) {
+	if(size < column) {
 		return;
 	}
 	QVector<QPair<QString, int>> pairs(size);
@@ -70,8 +70,8 @@ void Students::similarity(const QVector<QString> &s, QVector<QString> &_s) {
 		}
 		for(int i = 0; i < size; i++) {
 			int index = s.indexOf(_s[i]), l = 0;
-			int toCheck[] = {index - 9, index - 8, index - 7, index - 1, index + 1, index + 7, index + 8, index + 9};
-			int _toCheck[] = {i - 9, i - 8, i - 7, i - 1, i + 1, i + 7, i + 8, i + 9};
+			int toCheck[] = {index - column - 1, index - column, index - column + 1, index - 1, index + 1, index + column - 1, index + column, index + column + 1};
+			int _toCheck[] = {i - column - 1, i - column, i - column + 1, i - 1, i + 1, i + column - 1, i + column, i + column + 1};
 			pairs[i].second = 0;
 			for(int m : _toCheck) {
 				for(int n : toCheck) {
@@ -87,18 +87,18 @@ void Students::similarity(const QVector<QString> &s, QVector<QString> &_s) {
 	} while(L >= 8);
 }
 
-void Students::arrange(QVector<Seat> &seats, QVector<QString> &newStudents, const int index) {
+void Students::arrange(QVector<Seat> &seats, QVector<QString> &newStudents, const int index, const int column) {
 	if(seats.size() > 1) {
 		int rankTot = 0;
 		for(QVector<Seat>::Iterator i = seats.begin(); i != seats.end(); i++) {
-			i->setRank(index / 8, index % 8);
+			i->setRank(index / column, index % column);
 			rankTot += i->getRank();
 		}
 		std::sort(seats.begin(), seats.end());
 		int random = QRandomGenerator::global()->bounded(1, rankTot);
 		for(QVector<Seat>::Iterator i = seats.begin(); i != seats.end(); i++) {
 			if(random <= i->getRank()) {
-				newStudents[i->getRow() * 8 + i->getColumn()] = students[index];
+				newStudents[i->getRow() * column + i->getColumn()] = students[index];
 				seats.erase(i);
 				break;
 			} else {
@@ -106,7 +106,7 @@ void Students::arrange(QVector<Seat> &seats, QVector<QString> &newStudents, cons
 			}
 		}
 	} else {
-		newStudents[seats[0].getRow() * 8 + seats[0].getColumn()] = students[index];
+		newStudents[seats[0].getRow() * column + seats[0].getColumn()] = students[index];
 	}
 }
 

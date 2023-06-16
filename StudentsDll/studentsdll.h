@@ -11,11 +11,11 @@ public:
     Students(QString fileName = "list.txt");
     ~Students();
     inline QVector<QString> getStudents();
-    void refresh();
+    void refresh(const int);
 
 private:
-    void arrange(QVector<Seat> &, QVector<QString> &, const int);
-    void similarity(const QVector<QString> &, QVector<QString> &);
+    void arrange(QVector<Seat> &, QVector<QString> &, const int, const int);
+    void similarity(const QVector<QString> &, QVector<QString> &, const int);
     QVector<QString> students;
     QFile list;
 };
